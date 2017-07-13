@@ -126,7 +126,7 @@ describe ::API::V3::ParseQueryParamsService,
         end
 
         it 'returns the error' do
-          message = 'unexpected token at \'faulty["status:desc"]\''
+          message = '\'faulty["status:desc"]'
 
           expect(subject.errors.messages[:base].length)
             .to eql(1)
@@ -204,8 +204,7 @@ describe ::API::V3::ParseQueryParamsService,
           end
 
           it 'returns the error' do
-            message = 'unexpected token at ' +
-                      "'faulty[{\"status\":{\"operator\":\"=\",\"values\":[\"1\",\"2\"]}}]'"
+            message = "'faulty[{\"status\":{\"operator\":\"=\",\"values\":[\"1\",\"2\"]}}]"
 
             expect(subject.errors.messages[:base].length)
               .to eql(1)

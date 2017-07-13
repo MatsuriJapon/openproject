@@ -1,4 +1,5 @@
 #-- encoding: UTF-8
+
 #-- copyright
 # OpenProject is a project management system.
 # Copyright (C) 2012-2017 the OpenProject Foundation (OPF)
@@ -42,14 +43,14 @@ module API
 
     class Formatter
       def call(object, _env)
-        object.respond_to?(:to_json) ? object.to_json : MultiJson.dump(object)
+        object.respond_to?(:to_json) ? object.to_json : JSON.dump(object)
       end
     end
 
     class Parser
       def call(object, _env)
-        MultiJson.load(object)
-      rescue MultiJson::ParseError => e
+        JSON.parse(object)
+      rescue JSON::ParserError => e
         error = ::API::Errors::ParseError.new(details: e.message)
         representer = ::API::V3::Errors::ErrorRepresenter.new(error)
 
@@ -187,7 +188,7 @@ module API
     error_response ActiveRecord::RecordNotFound, ::API::Errors::NotFound.new
     error_response ActiveRecord::StaleObjectError, ::API::Errors::Conflict.new
 
-    error_response MultiJson::ParseError, ::API::Errors::ParseError.new
+    error_response JSON::ParserError, ::API::Errors::ParseError.new
 
     error_response ::API::Errors::Unauthenticated, headers: auth_headers, log: false
     error_response ::API::Errors::ErrorBase, rescue_subclasses: true, log: false
