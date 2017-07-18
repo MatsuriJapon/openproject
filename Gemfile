@@ -159,6 +159,8 @@ gem 'carrierwave', git: 'https://github.com/carrierwaveuploader/carrierwave', br
 
 gem 'openproject-token', '~> 1.0.0'
 
+gem 'rails_12factor'
+
 group :test do
   gem 'rack-test', '~> 0.6.3'
   gem 'shoulda-context', '~> 1.2'
